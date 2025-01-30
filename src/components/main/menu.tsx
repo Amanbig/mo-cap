@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button } from "../ui/button"; 
+import { ModeToggle } from "./themeToggle";
 
 function MenuBar() {
   return (
@@ -41,6 +42,7 @@ function MenuBar() {
       >
         Contact Us
       </Button>
+      <ModeToggle/>
       </div>
     </div>
   );
