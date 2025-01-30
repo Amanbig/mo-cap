@@ -52,8 +52,8 @@ function Footer() {
           <div>
             <h3 className="text-2xl font-semibold mb-4">Contact</h3>
             <ul>
-              <li className="mb-2 text-gray-400">Email: info@mocap.com</li>
-              <li className="mb-2 text-gray-400">Phone: +123 456 789</li>
+              <li className="mb-2 text-gray-400">Email: amanpreetsinghjhiwant@outlook.com</li>
+              <li className="mb-2 text-gray-400">Phone: +91 9041232480</li>
               <li>
                 <Button variant="link" className="text-white hover:text-gray-400">
                   Get in Touch

@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 
 const ThreeTest: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,6 @@ const ThreeTest: React.FC = () => {
   useEffect(() => {
     // Scene setup
     const scene = new THREE.Scene();
-    console.log(isScrolling)
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = initialModelPosition;
     cameraRef.current = camera;

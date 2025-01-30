@@ -132,7 +132,7 @@ const HomePage = () => {
 
             <Button
               variant="outline"
-              className="text-xl px-8 py-6 border-2 border-indigo-500 hover:bg-indigo-50 transform hover:scale-105 transition-all duration-200 rounded-lg"
+              className="text-xl px-8 py-6 border-2 border-indigo-500 hover:bg-indigo-50 hover:dark:bg-black transform hover:scale-105 transition-all duration-200 rounded-lg"
             >
               Learn More
             </Button>
