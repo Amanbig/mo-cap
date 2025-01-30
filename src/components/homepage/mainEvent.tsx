@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Sparkles, Zap, Shield, Rocket } from 'lucide-react';
 
 const HomePage = () => {
-  const { scrollY } = useScroll();
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const [heroRef, heroInView] = useInView({ threshold: 0.2, triggerOnce: false });

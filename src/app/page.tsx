@@ -1,5 +1,5 @@
 
-import MainEventCard from "@/components/main/mainEvent";
+import MainEventCard from "@/components/homepage/mainEvent";
 
 export default function Home() {
   return (
