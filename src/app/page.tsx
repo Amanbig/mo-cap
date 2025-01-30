@@ -33,10 +33,19 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen  bg-white  dark:bg-black text-black dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {/* Hero Section */}
-      <section ref={heroRef} className="h-screen relative overflow-hidden flex items-center justify-center px-6 bg-cover bg-center" style={{ backgroundImage: "url('/path/to/your-image.jpg')" }}>
+      <section ref={heroRef} className="h-screen relative overflow-hidden flex items-center justify-center px-6 bg-cover bg-center">
+        {/* Video Background */}
+        {/* <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover z-0">
+          <source src="/sample.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video> */}
+
+        {/* Dark Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent dark:bg-gradient-to-t dark:from-black/60" />
+
+        {/* Content */}
         <motion.div
           className="text-center max-w-7xl relative z-20"
           animate={heroInView ? {
@@ -45,31 +54,22 @@ const HomePage = () => {
             transition: { duration: 0.8 }
           } : {}}
         >
-          <motion.div
-            className="mb-6"
-            animate={{ scale: [0.9, 1], opacity: [0, 1] }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
-              Elevate Your Videos with AI
-            </h1>
-          </motion.div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+            Elevate Your Videos with AI
+          </h1>
           <p className="text-xl md:text-3xl mb-8 text-gray-800 dark:text-gray-200 opacity-80">
             Convert your videos into mesmerizing animations for 3D models and beyond.
           </p>
-          <Button 
-  className="text-lg px-8 py-6 bg-gradient-to-r from-teal-100 to-blue-100 hover:from-teal-200 hover:to-blue-200 transform hover:scale-105 transition-all duration-200 shadow-xl rounded-lg text-gray-800"
->
-  Start Animating
-</Button>
-
+          <Button className="text-lg px-8 py-6 bg-gradient-to-r from-teal-100 to-blue-100 hover:from-teal-200 hover:to-blue-200 transform hover:scale-105 transition-all duration-200 shadow-xl rounded-lg text-gray-800">
+            Start Animating
+          </Button>
         </motion.div>
       </section>
 
       {/* Features Section */}
-      <section 
+      <section
         ref={section1Ref}
-        className="py-20 px-4 bg-white/90 backdrop-blur-md bg-white  dark:bg-black"
+        className="py-20 px-4 bg-white/90 backdrop-blur-md bg-white dark:bg-black"
       >
         <motion.div
           className="max-w-6xl mx-auto"
@@ -85,8 +85,8 @@ const HomePage = () => {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
-                animate={section1InView ? { 
-                  opacity: 1, 
+                animate={section1InView ? {
+                  opacity: 1,
                   x: 0,
                   transition: { delay: index * 0.2 }
                 } : {}}
@@ -109,7 +109,8 @@ const HomePage = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b bg-white  dark:bg-black">
+      <section className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b bg-white dark:bg-black">
+        
         <motion.div
           className="max-w-4xl text-center"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -123,13 +124,13 @@ const HomePage = () => {
             Join thousands of creators turning their videos into life-like 3D animations.
           </p>
           <div className="space-x-4 flex justify-center">
-          <Button 
-  className="text-xl px-8 py-6 bg-gradient-to-r from-blue-100 to-green-100 hover:from-blue-200 hover:to-green-200 transform hover:scale-105 transition-all duration-200 shadow-lg rounded-lg text-gray-800"
->
-  Start Creating
-</Button>
+            <Button
+              className="text-xl px-8 py-6 bg-gradient-to-r from-blue-100 to-green-100 hover:from-blue-200 hover:to-green-200 transform hover:scale-105 transition-all duration-200 shadow-lg rounded-lg text-gray-800"
+            >
+              Start Creating
+            </Button>
 
-            <Button 
+            <Button
               variant="outline"
               className="text-xl px-8 py-6 border-2 border-indigo-500 hover:bg-indigo-50 transform hover:scale-105 transition-all duration-200 rounded-lg"
             >
