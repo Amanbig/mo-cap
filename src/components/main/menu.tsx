@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { ModeToggle } from "./themeToggle";
 import { Menu, X } from "lucide-react";
 import { useRouter } from 'next/navigation';
+import Link from "next/link";
 
 function MenuBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -45,7 +46,7 @@ function MenuBar() {
   return (
     <nav className="relative z-50">
       <div className="flex justify-between items-center w-full p-4 md:p-6 dark:bg-black dark:text-white text-black md:px-10">
-        <h2 className="text-2xl font-bold px-4">MoCap</h2>
+        <Link href="/"><h2 className="text-2xl font-bold px-4">MoCap</h2></Link>
         
         {/* Mobile menu toggle button */}
         <button
@@ -92,7 +93,7 @@ function MenuBar() {
               >
                 Login
               </Button>
-              <ModeToggle />
+              {/* <ModeToggle /> */}
             </div>
           </div>
         </div>

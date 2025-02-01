@@ -158,13 +158,13 @@ const ContactPage = () => {
               {
                 icon: <Phone className="w-8 h-8" />,
                 title: "Call Us",
-                content: "+1 (123) 456-7890",
+                content: "+91 9041232480",
                 color: "bg-blue-500",
               },
               {
                 icon: <Mail className="w-8 h-8" />,
                 title: "Email Us",
-                content: "hello@mocap.com",
+                content: "amanpreetsinghjhiwant@outlook.com",
                 color: "bg-purple-500",
               },
               {
