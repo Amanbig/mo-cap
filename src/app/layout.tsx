@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import MenuBar from "@/components/main/menu";
 import Footer from "@/components/main/footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
           <MenuBar />
           <main className="flex-grow">{children}</main> {/* Ensures the main content area grows */}
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>
