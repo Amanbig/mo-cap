@@ -1,13 +1,15 @@
-"use client";
+"use client"
 
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./themeToggle";
 import { Menu, X } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
 function MenuBar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  
+  const router = useRouter();
+
   // Close menu when screen size changes to desktop
   useEffect(() => {
     const handleResize = () => {
@@ -33,11 +35,11 @@ function MenuBar() {
   }, [menuOpen]);
 
   const menuItems = [
-    { label: "Home", href: "#" },
-    { label: "About", href: "#" },
-    { label: "Case Studies", href: "#" },
-    { label: "Process", href: "#" },
-    { label: "Contact", href: "#" }
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Case Studies", href: "/case-studies" },
+    { label: "Process", href: "/process" },
+    { label: "Contact", href: "/contact" }
   ];
 
   return (
@@ -72,7 +74,10 @@ function MenuBar() {
                   <Button
                     variant="ghost"
                     className="w-full text-lg justify-center hover:bg-gray-100 dark:hover:bg-gray-800"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={() => {
+                      router.push(item.href);
+                      setMenuOpen(false); // Close menu after navigation
+                    }}
                   >
                     {item.label}
                   </Button>
@@ -83,6 +88,7 @@ function MenuBar() {
               <Button 
                 variant="default"
                 className="w-full rounded-full dark:border-white border-black border-2"
+                onClick={() => router.push('auth/login')}
               >
                 Login
               </Button>
@@ -95,7 +101,11 @@ function MenuBar() {
         <ul className="hidden md:flex text-lg">
           {menuItems.map((item) => (
             <li key={item.label}>
-              <Button variant="link" className="hover:text-gray-400">
+              <Button
+                variant="link"
+                className="hover:text-gray-400"
+                onClick={() => router.push(item.href)} // Add router.push here
+              >
                 {item.label}
               </Button>
             </li>
@@ -106,10 +116,10 @@ function MenuBar() {
           <Button 
             variant="default" 
             className="rounded-full dark:border-white border-black border-2"
+            onClick={() => router.push("/login")}
           >
             Login
           </Button>
-          <ModeToggle />
         </div>
       </div>
     </nav>

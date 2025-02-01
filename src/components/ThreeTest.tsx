@@ -3,10 +3,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass';
 
 const ThreeTest: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -14,6 +10,7 @@ const ThreeTest: React.FC = () => {
   const mixerRef = useRef<THREE.AnimationMixer | null>(null);
   const lastTimeRef = useRef<number>(0);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -25,87 +22,77 @@ const ThreeTest: React.FC = () => {
     const containerHeight = mountRef.current.clientHeight;
 
     // Adjust camera for better model visibility
-    const camera = new THREE.PerspectiveCamera(45, containerWidth / containerHeight, 0.1, 1000);
-    camera.position.set(0, 0.5, 3);
+    const camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
+    camera.position.set(0, 0.5, 3); // Adjusted camera position for better vertical alignment
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(containerWidth, containerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-
-// Apply tone mapping and encoding here
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.0; // Reduce if too bright
-renderer.outputEncoding = THREE.sRGBEncoding;
-
-mountRef.current.appendChild(renderer.domElement);
-
-
-    // Post-processing setup
-    const composer = new EffectComposer(renderer);
-    const renderPass = new RenderPass(scene, camera);
-    composer.addPass(renderPass);
-
-    // Bloom effect (glow effect for highlights)
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(containerWidth, containerHeight), 0.8, 0.4, 0.85);
-    composer.addPass(bloomPass);
-
-    // Output pass for better color handling
-    const outputPass = new OutputPass();
-    composer.addPass(outputPass);
+    renderer.setSize(containerWidth, containerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    mountRef.current.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
 
     // Enhanced lighting setup
-    // const ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
-    // scene.add(ambientLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambientLight);
 
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0,6);
-    // directionalLight.position.set(5, 5, 5);
-    // scene.add(directionalLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
 
-    // const pointLight = new THREE.PointLight(0xffffff, 10, 40);
-    // pointLight.position.set(2, 3, 4);
-    // scene.add(pointLight);
+    const pointLight = new THREE.PointLight(0xff0000, 0.8, 0.2);
+    pointLight.position.set(2, 3, 4);
+    scene.add(pointLight);
+
+    // No background color set
+    scene.background = null;
 
     const loader = new GLTFLoader();
-    loader.load('/spider2099.glb', (gltf) => {
-      modelRef.current = gltf.scene;
+    loader.load(
+      '/phoenix_bird.glb',
+      (gltf) => {
+        console.log('Loaded Model:', gltf.scene); // Log the model object
+        modelRef.current = gltf.scene;
 
-      // Center and scale the model
-      const box = new THREE.Box3().setFromObject(gltf.scene);
-      const center = box.getCenter(new THREE.Vector3());
-      const size = box.getSize(new THREE.Vector3());
+        // Center and scale the model
+        const box = new THREE.Box3().setFromObject(gltf.scene);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
 
-      const maxDim = Math.max(size.x, size.y, size.z);
-      const scale = 1.5 / maxDim; // Adjust scale factor as needed
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 5 / maxDim; // Increased scale factor to 2 for larger model
 
-      gltf.scene.position.x = -center.x;
-      gltf.scene.position.y = -center.y + 0.5;
-      gltf.scene.position.z = -center.z;
-      gltf.scene.scale.setScalar(scale);
+        gltf.scene.position.set(0, 0, 0); // Force the model to the origin for testing
+        gltf.scene.scale.setScalar(scale); // Apply increased scale
 
-      scene.add(gltf.scene);
+        scene.add(gltf.scene);
 
-      mixerRef.current = new THREE.AnimationMixer(gltf.scene);
-      gltf.animations.forEach((clip) => {
-        const action = mixerRef.current?.clipAction(clip);
-        if (action) {
-          action.play();
-          action.setEffectiveTimeScale(0.5);
-        }
-      });
-    });
+        mixerRef.current = new THREE.AnimationMixer(gltf.scene);
+        gltf.animations.forEach((clip) => {
+          const action = mixerRef.current?.clipAction(clip);
+          if (action) {
+            action.play();
+            action.setEffectiveTimeScale(0.5);
+          }
+        });
+      },
+      undefined,
+      (error) => {
+        console.error('Model loading failed:', error);
+        alert('Failed to load model. Please check the model path and try again.');
+      }
+    );
 
-    // Responsive handling
+    // Add responsive handling
     const handleResize = () => {
       if (!mountRef.current) return;
-
+      
       const width = mountRef.current.clientWidth;
       const height = mountRef.current.clientHeight;
-
+      
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-      composer.setSize(width, height);
     };
 
     window.addEventListener('resize', handleResize);
@@ -113,24 +100,23 @@ mountRef.current.appendChild(renderer.domElement);
     const animate = (time: number) => {
       requestAnimationFrame(animate);
 
-      const delta = (time - lastTimeRef.current) * 0.001;
+      const delta = time - lastTimeRef.current;
       lastTimeRef.current = time;
 
       if (mixerRef.current) {
-        mixerRef.current.update(delta);
+        mixerRef.current.update(delta * 0.001);
       }
 
-      if (modelRef.current) {
-        modelRef.current.rotation.y += 0.005;
-      }
-
-      composer.render(); // Use post-processing renderer
+      renderer.render(scene, camera);
     };
 
     animate(0);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+      }
       if (mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);
       }

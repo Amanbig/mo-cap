@@ -14,6 +14,7 @@ const HomePage = () => {
   const [heroRef, heroInView] = useInView({ threshold: 0.2, triggerOnce: false });
   const [section1Ref, section1InView] = useInView({ threshold: 0.2, triggerOnce: false });
 
+  
   const features = [
     { icon: <Sparkles className="w-8 h-8 text-indigo-500" />, title: "AI-Powered Animation", description: "Transform your videos into stunning animations with our cutting-edge AI tools" },
     { icon: <Zap className="w-8 h-8 text-yellow-500" />, title: "Instant Results", description: "Apply animations to 3D models in real-time, fast and efficiently" },
@@ -44,9 +45,9 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent dark:bg-gradient-to-t dark:from-black/60" />
 
         {/* Centered 3D Model Behind the Text */}
-        {/* <div className="absolute inset-0 flex items-center justify-center z-10">
+        <div className="absolute inset-0 flex items-center justify-center z-10">
           <ThreeTest />
-        </div> */}
+        </div>
 
         {/* Main Heading - Positioned Above the 3D Model */}
         <motion.div
@@ -56,23 +57,43 @@ const HomePage = () => {
               ? {
                 opacity: [0, 1],
                 y: [20, 0],
-                transition: { duration: 0.8 },
+                transition: {
+                  opacity: { duration: 0.8, ease: "easeOut" },
+                  y: { duration: 0.8, ease: "easeOut" }
+                },
               }
               : {}
           }
         >
+          {/* Heading with smooth scale animation */}
           <motion.div
             className="mb-6"
-            animate={{ scale: [0.9, 1], opacity: [0, 1] }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            animate={{
+              scale: [0.9, 1],
+              opacity: [0, 1],
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.2,
+              ease: "easeOut", // Adding ease-out to scale and opacity
+            }}
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
               Elevate Your Videos with AI
             </h1>
           </motion.div>
-          <p className="text-xl md:text-3xl mb-8 text-gray-800 dark:text-gray-200 opacity-80">
+
+          {/* Subheading with improved opacity and staggered animation */}
+          <motion.p
+            className="text-xl md:text-3xl mb-8 text-gray-800 dark:text-gray-200 opacity-80"
+            animate={{ opacity: [0, 1] }}
+            transition={{
+              opacity: { duration: 0.6, delay: 0.5, ease: "easeOut" }, // Delayed opacity animation for text
+            }}
+          >
             Convert your videos into mesmerizing animations for 3D models and beyond.
-          </p>
+          </motion.p>
+
           <Button className="text-lg px-8 py-6 bg-gradient-to-r from-teal-100 to-blue-100 hover:from-teal-200 hover:to-blue-200 transform hover:scale-105 transition-all duration-200 shadow-xl rounded-lg text-gray-800">
             Start Animating
           </Button>
@@ -85,6 +106,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
 
 
 
